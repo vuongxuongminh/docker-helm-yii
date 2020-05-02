@@ -23,10 +23,10 @@ jobs:
       - name: Build images
         run: |
             docker-compose -f docker-compose.yaml -f docker-compose.override.yaml build
-            docker-compose -f docker-compose.yaml -f docker-compose.production.yaml build
+            docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml build
             
       - name: Push image
         run: |
             docker-compose -f docker-compose.yaml -f docker-compose.override.yaml push
-            docker-compose -f docker-compose.yaml -f docker-compose.production.yaml push
+            docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml push
 
