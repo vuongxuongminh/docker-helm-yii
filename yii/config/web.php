@@ -2,7 +2,7 @@
 
 $params = require __DIR__.'/params.php';
 $db = require __DIR__.'/db.php';
-$log = require __DIR__ . '/log.php';
+$log = require __DIR__.'/log.php';
 $mailer = require __DIR__.'/mailer.php';
 $queue = require __DIR__.'/queue.php';
 $assetManager = YII_ENV_PROD ? 'SamIT\Yii2\StaticAssets\ReadOnlyAssetManager' : 'yii\web\AssetManager';
@@ -18,7 +18,8 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '!ChangeMe!',
+            'cookieValidationKey' => $_SERVER['COOKIE_VALIDATION_KEY'],
+            'trustedHosts' => explode(',', $_SERVER['TRUSTED_PROXIES']),
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
