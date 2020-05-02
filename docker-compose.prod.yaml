@@ -15,8 +15,6 @@ services:
       cache_from: *build-cache
       args:
         << : *build-args
-    environment:
-      << : *build-args
 
   supervisor:
     image: ${PHP_IMAGE:-vuongxuongminh/docker-helm-yii-php}:prod
@@ -24,8 +22,6 @@ services:
       cache_from: *build-cache
       args:
         << : *build-args
-    environment:
-      << : *build-args
 
   nginx:
     image: ${NGINX_IMAGE:-vuongxuongminh/docker-helm-yii-nginx}:prod
@@ -33,7 +29,3 @@ services:
       cache_from: *build-cache
       args:
         << : *build-args
-    ports:
-    - target: 80
-      published: 80
-      protocol: tcp
