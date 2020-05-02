@@ -1,0 +1,39 @@
+version: '3.4'
+
+x-build:
+  - &build-args
+    YII_ENV: 'prod'
+    YII_DEBUG: 'false'
+  - &build-cache
+    - ${PHP_IMAGE:-vuongxuongminh/docker-helm-yii-php}:prod
+    - ${NGINX_IMAGE:-vuongxuongminh/docker-helm-yii-nginx}:prod
+
+services:
+  fpm:
+    image: ${PHP_IMAGE:-vuongxuongminh/docker-helm-yii-php}:prod
+    build:
+      cache_from: *build-cache
+      args:
+        << : *build-args
+    environment:
+      << : *build-args
+
+  supervisor:
+    image: ${PHP_IMAGE:-vuongxuongminh/docker-helm-yii-php}:prod
+    build:
+      cache_from: *build-cache
+      args:
+        << : *build-args
+    environment:
+      << : *build-args
+
+  nginx:
+    image: ${NGINX_IMAGE:-vuongxuongminh/docker-helm-yii-nginx}:prod
+    build:
+      cache_from: *build-cache
+      args:
+        << : *build-args
+    ports:
+    - target: 80
+      published: 80
+      protocol: tcp

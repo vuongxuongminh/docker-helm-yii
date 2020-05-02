@@ -1,0 +1,7 @@
+- module: nginx
+  access:
+    enabled: true
+    var.paths: ["${path.config}/logs/nginx/yii_access.log*"]
+  error:
+    enabled: true
+    var.paths: ["${path.config}/logs/nginx/yii_error.log*"]
