@@ -1,7 +1,11 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$params = require __DIR__.'/params.php';
+$db = require __DIR__.'/db.php';
+$log = require __DIR__ . '/log.php';
+$mailer = require __DIR__.'/mailer.php';
+$queue = require __DIR__.'/queue.php';
+$assetManager = YII_ENV_PROD ? 'SamIT\Yii2\StaticAssets\ReadOnlyAssetManager' : 'yii\web\AssetManager';
 
 $config = [
     'id' => 'basic',
@@ -9,7 +13,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -26,31 +30,17 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+        'mailer' => $mailer,
+        'log' => $log,
         'db' => $db,
-        /*
+        'queue' => $queue,
+        'assetManager' => $assetManager,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
