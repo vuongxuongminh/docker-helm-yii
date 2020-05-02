@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "php" . }}
+  labels:
+    {{- include "labels" . | nindent 4 }}
+data:
+  YII_ENV: {{ .Values.php.env | quote }}
+  YII_DEBUG: {{ .Values.php.debug | quote }}
+  TRUSTED_PROXIES: {{ join "," .Values.php.trustedProxies | quote }}
